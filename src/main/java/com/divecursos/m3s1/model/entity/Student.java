@@ -3,7 +3,7 @@ package com.divecursos.m3s1.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "class")
+@Table(name = "student")
 public class Student {
     @Id
     private Integer register;

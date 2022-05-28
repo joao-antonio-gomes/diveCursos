@@ -3,7 +3,7 @@ package com.divecursos.m3s1.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "class")
+@Table(name = "enrollment")
 public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

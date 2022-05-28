@@ -7,11 +7,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class CourseRepository extends GenericRepository {
-    public List<Course> findAll() {
-        return entityManager.createQuery("SELECT c FROM Course c", Course.class).getResultList();
+    public List<Course> findAll(String sort, Integer limit) {
+        String jpql = "SELECT c FROM Course c";
+        if (sort != null)
+            jpql += " ORDER BY c." + sort;
+        if (limit != null)
+            jpql += " LIMIT " + limit;
+        return entityManager.createQuery(jpql, Course.class).getResultList();
     }
 
-    public Optional<Course> findById(String code) {
+    public Optional<Course> findByCourse(String code) {
         String jpql = "SELECT c FROM Course c WHERE c.code = :code";
         try {
             return Optional.of(entityManager.createQuery(jpql, Course.class)
@@ -26,7 +31,7 @@ public class CourseRepository extends GenericRepository {
         return entityManager.merge(course);
     }
 
-    public void deleteById(String code) {
+    public void deleteByCode(String code) {
         Course course = entityManager.find(Course.class, code);
         entityManager.remove(course);
     }

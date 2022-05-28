@@ -16,7 +16,7 @@ public class CourseRepository extends GenericRepository {
         return entityManager.createQuery(jpql, Course.class).getResultList();
     }
 
-    public Optional<Course> findByCourse(String code) {
+    public Optional<Course> findByCode(String code) {
         String jpql = "SELECT c FROM Course c WHERE c.code = :code";
         try {
             return Optional.of(entityManager.createQuery(jpql, Course.class)

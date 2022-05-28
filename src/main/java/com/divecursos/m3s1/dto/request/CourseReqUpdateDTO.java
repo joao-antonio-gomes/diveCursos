@@ -1,11 +1,14 @@
 package com.divecursos.m3s1.dto.request;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class CourseReqUpdateDTO implements Serializable {
     private String code;
+    @NotNull(message = "O campo subject é obrigatório")
     private final String subject;
+    @NotNull(message = "O campo length é obrigatório")
     private final Integer length;
 
     public CourseReqUpdateDTO(String subject, Integer length) {

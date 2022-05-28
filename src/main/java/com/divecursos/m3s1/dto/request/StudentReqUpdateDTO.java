@@ -1,10 +1,12 @@
 package com.divecursos.m3s1.dto.request;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class StudentReqUpdateDTO implements Serializable {
     private Integer register;
+    @NotNull(message = "O campo fullName é obrigatório")
     private final String fullName;
 
     public StudentReqUpdateDTO(String fullName) {

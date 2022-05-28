@@ -1,11 +1,15 @@
 package com.divecursos.m3s1.dto.request;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class CourseReqCreateDTO implements Serializable {
+    @NotNull(message = "O campo 'code' não pode ser nulo.")
     private final String code;
+    @NotNull(message = "O campo 'subject' não pode ser nulo.")
     private final String subject;
+    @NotNull(message = "O campo 'length' não pode ser nulo.")
     private final Integer length;
 
     public CourseReqCreateDTO(String code, String subject, Integer length) {

@@ -1,5 +1,6 @@
 package com.divecursos.m3s1.service;
 
+import com.divecursos.m3s1.exception.RecordFoundException;
 import com.divecursos.m3s1.exception.RecordNotFoundException;
 import com.divecursos.m3s1.model.entity.Course;
 import com.divecursos.m3s1.model.entity.Enrollment;
@@ -19,9 +20,11 @@ public class EnrollmentService {
     @Inject
     private StudentService studentService;
 
-    public Enrollment create(Enrollment enrollment) throws RecordNotFoundException {
+    public Enrollment create(Enrollment enrollment) throws RecordNotFoundException, RecordFoundException {
         Course course = courseService.findByCode(enrollment.getCourse().getCode());
         Student student = studentService.findByRegister(enrollment.getStudent().getRegister());
+        if (enrollmentRepository.findEnrollmentByCourseAndStudent(course, student).isPresent())
+            throw new RecordFoundException("Enrollment", "Course and Student already exists");
         enrollment.setCourse(course);
         enrollment.setStudent(student);
         return enrollmentRepository.save(enrollment);
@@ -33,7 +36,10 @@ public class EnrollmentService {
         enrollmentRepository.deleteById(id);
     }
 
-    public List<Enrollment> findAll() {
-        return enrollmentRepository.findAll();
+    public List<Enrollment> findAll() throws RecordNotFoundException {
+        List<Enrollment> enrollmentList = enrollmentRepository.findAll();
+        if (enrollmentList.size() == 0)
+            throw new RecordNotFoundException("Enrollment", "No records found");
+        return enrollmentList;
     }
 }

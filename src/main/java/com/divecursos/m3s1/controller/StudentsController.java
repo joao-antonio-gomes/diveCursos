@@ -1,17 +1,11 @@
 package com.divecursos.m3s1.controller;
 
-import com.divecursos.m3s1.dto.request.CourseReqCreateDTO;
-import com.divecursos.m3s1.dto.request.CourseReqUpdateDTO;
 import com.divecursos.m3s1.dto.request.StudentReqCreateDTO;
 import com.divecursos.m3s1.dto.request.StudentReqUpdateDTO;
-import com.divecursos.m3s1.dto.response.CourseRespDTO;
 import com.divecursos.m3s1.dto.response.StudentRespDTO;
-import com.divecursos.m3s1.exception.IncorrectInputException;
 import com.divecursos.m3s1.exception.RecordFoundException;
 import com.divecursos.m3s1.exception.RecordNotFoundException;
-import com.divecursos.m3s1.mapper.CourseMapper;
 import com.divecursos.m3s1.mapper.StudentMapper;
-import com.divecursos.m3s1.model.entity.Course;
 import com.divecursos.m3s1.model.entity.Student;
 import com.divecursos.m3s1.service.StudentService;
 

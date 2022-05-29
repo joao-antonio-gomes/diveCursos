@@ -1,6 +1,8 @@
 package com.divecursos.m3s1.model.repository;
 
+import com.divecursos.m3s1.model.entity.Course;
 import com.divecursos.m3s1.model.entity.Enrollment;
+import com.divecursos.m3s1.model.entity.Student;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -45,5 +47,17 @@ public class EnrollmentRepository extends GenericRepository {
 
     public Enrollment update(Enrollment enrollment) {
         return entityManager.merge(enrollment);
+    }
+
+    public Optional<Enrollment> findEnrollmentByCourseAndStudent(Course course, Student student) {
+        String jpql = "SELECT e FROM Enrollment e WHERE e.course = :course AND e.student = :student";
+        try {
+            return Optional.of(entityManager.createQuery(jpql, Enrollment.class)
+                    .setParameter("course", course)
+                    .setParameter("student", student)
+                    .getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }

@@ -21,41 +21,41 @@ public class CourseService {
 
     public Course create(Course course) throws RecordFoundException {
         if (courseRepository.findByCode(course.getCode()).isPresent())
-            throw new RecordFoundException("Course", course.getCode());
+            throw new RecordFoundException("Curso", course.getCode());
         return courseRepository.save(course);
     }
 
     public Course update(Course course) throws RecordNotFoundException {
-        if (courseRepository.findByCode(course.getCode()).isPresent())
-            throw new RecordNotFoundException("Course", course.getCode());
+        if (!courseRepository.findByCode(course.getCode()).isPresent())
+            throw new RecordNotFoundException("Curso", course.getCode());
         return courseRepository.merge(course);
     }
 
     public void deleteByCode(String code) throws IncorrectInputException, RecordNotFoundException {
         if (code == null || code.isEmpty())
-            throw new RecordNotFoundException("Course", "código não informado");
+            throw new IncorrectInputException("Curso", "código não informado");
         if (!courseRepository.findByCode(code).isPresent())
-            throw new RecordNotFoundException("Course", code);
+            throw new RecordNotFoundException("Curso", code);
         if (enrollmentRepository.findByCourseCode(code).size() > 0)
-            throw new IncorrectInputException("Course", "Não pode ser excluído um curso que tenha matrículas");
+            throw new IncorrectInputException("Curso", "Não pode ser excluído um curso que tenha matrículas");
         courseRepository.deleteByCode(code);
     }
 
     public List<Course> findAll(String sort, Integer limit) throws IncorrectInputException, RecordNotFoundException {
-        if (sort != null && !sort.equals("assunto") && !sort.equals("duracao"))
+        if (sort != null && !sort.equals("length") && !sort.equals("subject"))
             throw new IncorrectInputException("Sort", sort);
         List<Course> allCourses = courseRepository.findAll(sort, limit);
         if (allCourses.size() == 0)
-            throw new RecordNotFoundException("Courses", "número de cursos");
+            throw new RecordNotFoundException("Curso", "número de cursos");
         return allCourses;
     }
 
     public Course findByCode(String code) throws RecordNotFoundException {
         if (code == null || code.isEmpty())
-            throw new RecordNotFoundException("Course", "código não informado");
+            throw new RecordNotFoundException("Curso", "código não informado");
         Optional<Course> course = courseRepository.findByCode(code);
         if (!course.isPresent())
-            throw new RecordNotFoundException("Course", code);
+            throw new RecordNotFoundException("Curso", code);
         return course.get();
     }
 }

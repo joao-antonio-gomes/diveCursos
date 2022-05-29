@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class EnrollmentRespDTO implements Serializable {
-    private final Long id;
-    private final StudentRespDTO student;
-    private final CourseRespDTO course;
+    private Long id;
+    private StudentRespDTO student;
+    private CourseRespDTO course;
+
+    public EnrollmentRespDTO() {
+    }
 
     public EnrollmentRespDTO(Long id, StudentRespDTO student, CourseRespDTO course) {
         this.id = id;
@@ -18,34 +21,23 @@ public class EnrollmentRespDTO implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public StudentRespDTO getStudent() {
         return student;
+    }
+
+    public void setStudent(StudentRespDTO student) {
+        this.student = student;
     }
 
     public CourseRespDTO getCourse() {
         return course;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EnrollmentRespDTO entity = (EnrollmentRespDTO) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.student, entity.student) &&
-                Objects.equals(this.course, entity.course);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, student, course);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "student = " + student + ", " +
-                "course = " + course + ")";
+    public void setCourse(CourseRespDTO course) {
+        this.course = course;
     }
 }

@@ -3,6 +3,7 @@ package com.divecursos.m3s1.model.repository;
 import com.divecursos.m3s1.model.entity.Course;
 
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +12,10 @@ public class CourseRepository extends GenericRepository {
         String jpql = "SELECT c FROM Course c";
         if (sort != null)
             jpql += " ORDER BY c." + sort;
+        TypedQuery<Course> query = entityManager.createQuery(jpql, Course.class);
         if (limit != null)
-            jpql += " LIMIT " + limit;
-        return entityManager.createQuery(jpql, Course.class).getResultList();
+            query.setMaxResults(limit);
+        return query.getResultList();
     }
 
     public Optional<Course> findByCode(String code) {

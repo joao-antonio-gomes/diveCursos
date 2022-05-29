@@ -7,10 +7,17 @@ import java.util.Objects;
 public class StudentReqUpdateDTO implements Serializable {
     private Integer register;
     @NotNull(message = "O campo fullName é obrigatório")
-    private final String fullName;
+    private String fullName;
 
     public StudentReqUpdateDTO(String fullName) {
         this.fullName = fullName;
+    }
+
+    public StudentReqUpdateDTO() {
+    }
+
+    public Integer getRegister() {
+        return register;
     }
 
     public void setRegister(Integer register) {
@@ -21,22 +28,7 @@ public class StudentReqUpdateDTO implements Serializable {
         return fullName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentReqUpdateDTO entity = (StudentReqUpdateDTO) o;
-        return Objects.equals(this.fullName, entity.fullName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(fullName);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "fullName = " + fullName + ")";
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

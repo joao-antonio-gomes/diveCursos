@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class StudentReqCreateDTO implements Serializable {
     @NotNull(message = "O campo register é obrigatório")
-    private final Integer register;
+    private Integer register;
     @NotNull(message = "O campo fullName é obrigatório")
-    private final String fullName;
+    private String fullName;
 
     public StudentReqCreateDTO(Integer register, String fullName) {
         this.register = register;
@@ -19,28 +19,15 @@ public class StudentReqCreateDTO implements Serializable {
         return register;
     }
 
+    public void setRegister(Integer register) {
+        this.register = register;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentReqCreateDTO entity = (StudentReqCreateDTO) o;
-        return Objects.equals(this.register, entity.register) &&
-                Objects.equals(this.fullName, entity.fullName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(register, fullName);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "register = " + register + ", " +
-                "fullName = " + fullName + ")";
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

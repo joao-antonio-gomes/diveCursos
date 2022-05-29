@@ -7,13 +7,20 @@ import java.util.Objects;
 public class CourseReqUpdateDTO implements Serializable {
     private String code;
     @NotNull(message = "O campo subject é obrigatório")
-    private final String subject;
+    private String subject;
     @NotNull(message = "O campo length é obrigatório")
-    private final Integer length;
+    private Integer length;
+
+    public CourseReqUpdateDTO() {
+    }
 
     public CourseReqUpdateDTO(String subject, Integer length) {
         this.subject = subject;
         this.length = length;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void setCode(String code) {
@@ -24,28 +31,15 @@ public class CourseReqUpdateDTO implements Serializable {
         return subject;
     }
 
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public Integer getLength() {
         return length;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CourseReqUpdateDTO entity = (CourseReqUpdateDTO) o;
-        return Objects.equals(this.subject, entity.subject) &&
-                Objects.equals(this.length, entity.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(subject, length);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "subject = " + subject + ", " +
-                "length = " + length + ")";
+    public void setLength(Integer length) {
+        this.length = length;
     }
 }

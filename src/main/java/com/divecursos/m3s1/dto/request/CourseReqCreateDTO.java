@@ -1,16 +1,19 @@
 package com.divecursos.m3s1.dto.request;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 public class CourseReqCreateDTO implements Serializable {
-    @NotNull(message = "O campo 'code' não pode ser nulo.")
-    private final String code;
-    @NotNull(message = "O campo 'subject' não pode ser nulo.")
-    private final String subject;
+    @NotEmpty(message = "O campo 'code' não pode ser nulo.")
+    private String code;
+    @NotEmpty(message = "O campo 'subject' não pode ser nulo.")
+    private String subject;
     @NotNull(message = "O campo 'length' não pode ser nulo.")
-    private final Integer length;
+    private Integer length;
+
+    public CourseReqCreateDTO() {
+    }
 
     public CourseReqCreateDTO(String code, String subject, Integer length) {
         this.code = code;
@@ -22,34 +25,23 @@ public class CourseReqCreateDTO implements Serializable {
         return code;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getSubject() {
         return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public Integer getLength() {
         return length;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CourseReqCreateDTO entity = (CourseReqCreateDTO) o;
-        return Objects.equals(this.code, entity.code) &&
-                Objects.equals(this.subject, entity.subject) &&
-                Objects.equals(this.length, entity.length);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, subject, length);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "code = " + code + ", " +
-                "subject = " + subject + ", " +
-                "length = " + length + ")";
+    public void setLength(Integer length) {
+        this.length = length;
     }
 }

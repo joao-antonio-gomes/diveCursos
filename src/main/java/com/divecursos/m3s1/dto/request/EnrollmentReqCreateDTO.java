@@ -4,9 +4,12 @@ import javax.validation.constraints.NotNull;
 
 public class EnrollmentReqCreateDTO {
     @NotNull(message = "O campo código do curso é obrigatório")
-    private final String courseCode;
+    private String courseCode;
     @NotNull(message = "O campo código do aluno é obrigatório")
-    private final Integer studentRegister;
+    private Integer studentRegister;
+
+    public EnrollmentReqCreateDTO() {
+    }
 
     public EnrollmentReqCreateDTO(String courseCode, Integer studentRegister) {
         this.courseCode = courseCode;
@@ -17,7 +20,15 @@ public class EnrollmentReqCreateDTO {
         return courseCode;
     }
 
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
     public Integer getStudentRegister() {
         return studentRegister;
+    }
+
+    public void setStudentRegister(Integer studentRegister) {
+        this.studentRegister = studentRegister;
     }
 }

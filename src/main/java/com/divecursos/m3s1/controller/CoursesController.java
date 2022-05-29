@@ -72,8 +72,8 @@ public class CoursesController {
     @Path("/{code}")
     public Response update(@PathParam("code") String code, @Valid CourseReqUpdateDTO courseRequest) {
         try {
-            courseRequest.setCode(code);
             Course course = CourseMapper.INSTANCE.toModel(courseRequest);
+            course.setCode(code);
             Course courseUpdated = courseService.update(course);
             CourseRespDTO courseResponse = CourseMapper.INSTANCE.toGenericResponse(courseUpdated);
             return Response.ok(courseResponse).build();

@@ -1,5 +1,6 @@
 package com.divecursos.m3s1.service;
 
+import com.divecursos.m3s1.exception.RecordFoundException;
 import com.divecursos.m3s1.exception.RecordNotFoundException;
 import com.divecursos.m3s1.model.entity.Student;
 import com.divecursos.m3s1.model.repository.EnrollmentRepository;
@@ -17,15 +18,22 @@ public class StudentService {
     @Inject
     private EnrollmentRepository enrollmentRepository;
 
-    public Student create(Student student) {
+    public Student create(Student student) throws RecordFoundException {
+        if (studentRepository.findByRegister(student.getRegister()).isPresent()) {
+            throw new RecordFoundException("Student register", String.valueOf(student.getRegister()));
+        }
         return studentRepository.save(student);
     }
 
-    public Student update(Student student) {
+    public Student update(Student student) throws RecordNotFoundException {
+        if (!studentRepository.findByRegister(student.getRegister()).isPresent())
+            throw new RecordNotFoundException("Student", String.valueOf(student.getRegister()));
         return studentRepository.merge(student);
     }
 
-    public void deleteByRegister(Integer register) {
+    public void deleteByRegister(Integer register) throws RecordNotFoundException {
+        if (!studentRepository.findByRegister(register).isPresent())
+            throw new RecordNotFoundException("Student register", String.valueOf(register));
         enrollmentRepository.findByStudentRegister(register)
                 .forEach(enrollment -> enrollmentRepository.remove(enrollment));
         studentRepository.deleteByRegister(register);
@@ -38,7 +46,10 @@ public class StudentService {
         return student.get();
     }
 
-    public List<Student> findAll(String studentName) {
-        return studentRepository.findAll(studentName);
+    public List<Student> findAll(String studentName) throws RecordNotFoundException {
+        List<Student> studentsFound = studentRepository.findAll(studentName);
+        if (studentsFound.isEmpty())
+            throw new RecordNotFoundException("Student", studentName);
+        return studentsFound;
     }
 }

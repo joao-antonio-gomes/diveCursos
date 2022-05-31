@@ -37,14 +37,14 @@ public class CourseService {
         if (!courseRepository.findByCode(code).isPresent())
             throw new RecordNotFoundException("Curso", code);
         if (enrollmentRepository.findByCourseCode(code).size() > 0)
-            throw new IncorrectInputException("Curso", "Não pode ser excluído um curso que tenha matrículas");
+            throw new RecordFoundException("Curso", "Não pode ser excluído um curso que tenha matrículas");
         courseRepository.deleteByCode(code);
     }
 
-    public List<Course> findAll(String sort, Integer limit) {
-        if (sort != null && !sort.equals("length") && !sort.equals("subject"))
+    public List<Course> getAll(String sort, Integer limit) {
+        if (sort != null && (!sort.equals("length") || !sort.equals("subject")))
             throw new IncorrectInputException("Sort", sort);
-        List<Course> allCourses = courseRepository.findAll(sort, limit);
+        List<Course> allCourses = courseRepository.getAll(sort, limit);
         if (allCourses.size() == 0)
             throw new RecordNotFoundException("Curso", "número de cursos");
         return allCourses;

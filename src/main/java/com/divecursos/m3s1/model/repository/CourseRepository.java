@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CourseRepository extends GenericRepository {
-    public List<Course> findAll(String sort, Integer limit) {
+    public List<Course> getAll(String sort, Integer limit) {
         String jpql = "SELECT c FROM Course c";
         if (sort != null)
             jpql += " ORDER BY c." + sort;

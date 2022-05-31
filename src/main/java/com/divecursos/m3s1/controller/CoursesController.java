@@ -32,7 +32,7 @@ public class CoursesController {
 
     @GET
     public Response getAll(@QueryParam("sort") String sort, @QueryParam("limit") Integer limit) {
-        List<Course> courses = courseService.findAll(sort, limit);
+        List<Course> courses = courseService.getAll(sort, limit);
         List<CourseRespDTO> coursesResponse = courses.stream().map(CourseMapper.INSTANCE::toGenericResponse).collect(Collectors.toList());
         return Response.ok(coursesResponse).build();
     }

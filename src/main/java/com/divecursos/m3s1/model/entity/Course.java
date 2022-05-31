@@ -13,6 +13,12 @@ public class Course {
     public Course() {
     }
 
+    public Course(String code, String subject, Integer length) {
+        this.code = code;
+        this.subject = subject;
+        this.length = length;
+    }
+
     public String getCode() {
         return code;
     }

@@ -18,20 +18,20 @@ public class StudentService {
     @Inject
     private EnrollmentRepository enrollmentRepository;
 
-    public Student create(Student student) throws RecordFoundException {
+    public Student create(Student student) {
         if (studentRepository.findByRegister(student.getRegister()).isPresent()) {
             throw new RecordFoundException("Student register", String.valueOf(student.getRegister()));
         }
         return studentRepository.save(student);
     }
 
-    public Student update(Student student) throws RecordNotFoundException {
+    public Student update(Student student) {
         if (!studentRepository.findByRegister(student.getRegister()).isPresent())
             throw new RecordNotFoundException("Student", String.valueOf(student.getRegister()));
         return studentRepository.merge(student);
     }
 
-    public void deleteByRegister(Integer register) throws RecordNotFoundException {
+    public void deleteByRegister(Integer register) {
         if (!studentRepository.findByRegister(register).isPresent())
             throw new RecordNotFoundException("Student register", String.valueOf(register));
         enrollmentRepository.findByStudentRegister(register)
@@ -39,14 +39,14 @@ public class StudentService {
         studentRepository.deleteByRegister(register);
     }
 
-    public Student findByRegister(Integer register) throws RecordNotFoundException {
+    public Student findByRegister(Integer register) {
         Optional<Student> student = studentRepository.findByRegister(register);
         if (!student.isPresent())
             throw new RecordNotFoundException("Student", String.valueOf(register));
         return student.get();
     }
 
-    public List<Student> findAll(String studentName) throws RecordNotFoundException {
+    public List<Student> findAll(String studentName) {
         List<Student> studentsFound = studentRepository.findAll(studentName);
         if (studentsFound.isEmpty())
             throw new RecordNotFoundException("Student", studentName);

@@ -1,16 +1,11 @@
 package com.divecursos.m3s1.exception;
 
-public class RecordFoundException extends Exception {
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-    private String tipoRegistro;
-    private String identificador;
+public class RecordFoundException extends WebApplicationException {
 
     public RecordFoundException(String tipoRegistro, String identificador) {
-        this.tipoRegistro = tipoRegistro;
-        this.identificador = identificador;
-    }
-
-    public String getMessage() {
-        return String.format("%s: Registro existente com identificador: %s", tipoRegistro, identificador);
+        super(String.format("%s: Registro existente com identificador: %s", tipoRegistro, identificador), Response.Status.CONFLICT);
     }
 }

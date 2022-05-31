@@ -47,7 +47,7 @@ public class CoursesController {
             return Response.ok(coursesResponse).build();
         } catch (IncorrectInputException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }  catch (RecordNotFoundException e) {
+        } catch (RecordNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Ocorreu um erro no servidor, tente novamente!").build();
@@ -57,45 +57,25 @@ public class CoursesController {
     @GET
     @Path("/{code}")
     public Response getByCode(@PathParam("code") String code) {
-        try {
-            Course course = courseService.findByCode(code);
-            CourseRespDTO courseResponse = CourseMapper.INSTANCE.toGenericResponse(course);
-            return Response.ok(courseResponse).build();
-        } catch (RecordNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Ocorreu um erro no servidor, tente novamente!").build();
-        }
+        Course course = courseService.findByCode(code);
+        CourseRespDTO courseResponse = CourseMapper.INSTANCE.toGenericResponse(course);
+        return Response.ok(courseResponse).build();
     }
 
     @PUT
     @Path("/{code}")
     public Response update(@PathParam("code") String code, @Valid CourseReqUpdateDTO courseRequest) {
-        try {
-            Course course = CourseMapper.INSTANCE.toModel(courseRequest);
-            course.setCode(code);
-            Course courseUpdated = courseService.update(course);
-            CourseRespDTO courseResponse = CourseMapper.INSTANCE.toGenericResponse(courseUpdated);
-            return Response.ok(courseResponse).build();
-        } catch (RecordNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Ocorreu um erro no servidor, tente novamente!").build();
-        }
+        Course course = CourseMapper.INSTANCE.toModel(courseRequest);
+        course.setCode(code);
+        Course courseUpdated = courseService.update(course);
+        CourseRespDTO courseResponse = CourseMapper.INSTANCE.toGenericResponse(courseUpdated);
+        return Response.ok(courseResponse).build();
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        try {
-            courseService.deleteByCode(code);
-            return Response.noContent().build();
-        } catch (RecordNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-        }  catch (IncorrectInputException e) {
-            return Response.status(Response.Status.CONFLICT).entity(e.getMessage()).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Ocorreu um erro no servidor, tente novamente!").build();
-        }
+        courseService.deleteByCode(code);
+        return Response.noContent().build();
     }
 }

@@ -20,7 +20,7 @@ public class EnrollmentService {
     @Inject
     private StudentService studentService;
 
-    public Enrollment create(Enrollment enrollment) throws RecordNotFoundException, RecordFoundException {
+    public Enrollment create(Enrollment enrollment) {
         Course course = courseService.findByCode(enrollment.getCourse().getCode());
         Student student = studentService.findByRegister(enrollment.getStudent().getRegister());
         if (enrollmentRepository.findEnrollmentByCourseAndStudent(course, student).isPresent())
@@ -30,13 +30,13 @@ public class EnrollmentService {
         return enrollmentRepository.save(enrollment);
     }
 
-    public void deleteById(Long id) throws RecordNotFoundException {
+    public void deleteById(Long id) {
         if (!enrollmentRepository.findById(id).isPresent())
             throw new RecordNotFoundException("Enrollment", String.valueOf(id));
         enrollmentRepository.deleteById(id);
     }
 
-    public List<Enrollment> findAll() throws RecordNotFoundException {
+    public List<Enrollment> findAll() {
         List<Enrollment> enrollmentList = enrollmentRepository.findAll();
         if (enrollmentList.size() == 0)
             throw new RecordNotFoundException("Enrollment", "No records found");

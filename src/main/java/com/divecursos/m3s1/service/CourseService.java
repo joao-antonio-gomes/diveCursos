@@ -19,19 +19,19 @@ public class CourseService {
     @Inject
     private EnrollmentRepository enrollmentRepository;
 
-    public Course create(Course course) throws RecordFoundException {
+    public Course create(Course course) {
         if (courseRepository.findByCode(course.getCode()).isPresent())
             throw new RecordFoundException("Curso", course.getCode());
         return courseRepository.save(course);
     }
 
-    public Course update(Course course) throws RecordNotFoundException {
+    public Course update(Course course) {
         if (!courseRepository.findByCode(course.getCode()).isPresent())
             throw new RecordNotFoundException("Curso", course.getCode());
         return courseRepository.merge(course);
     }
 
-    public void deleteByCode(String code) throws IncorrectInputException, RecordNotFoundException {
+    public void deleteByCode(String code) {
         if (code == null || code.isEmpty())
             throw new IncorrectInputException("Curso", "código não informado");
         if (!courseRepository.findByCode(code).isPresent())
@@ -41,7 +41,7 @@ public class CourseService {
         courseRepository.deleteByCode(code);
     }
 
-    public List<Course> findAll(String sort, Integer limit) throws IncorrectInputException, RecordNotFoundException {
+    public List<Course> findAll(String sort, Integer limit) {
         if (sort != null && !sort.equals("length") && !sort.equals("subject"))
             throw new IncorrectInputException("Sort", sort);
         List<Course> allCourses = courseRepository.findAll(sort, limit);
@@ -50,9 +50,9 @@ public class CourseService {
         return allCourses;
     }
 
-    public Course findByCode(String code) throws RecordNotFoundException {
+    public Course findByCode(String code) {
         if (code == null || code.isEmpty())
-            throw new RecordNotFoundException("Curso", "código não informado");
+            throw new IncorrectInputException("Curso", "código não informado");
         Optional<Course> course = courseRepository.findByCode(code);
         if (!course.isPresent())
             throw new RecordNotFoundException("Curso", code);

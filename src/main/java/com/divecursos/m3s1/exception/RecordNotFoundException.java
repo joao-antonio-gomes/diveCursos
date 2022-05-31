@@ -1,16 +1,11 @@
 package com.divecursos.m3s1.exception;
 
-public class RecordNotFoundException extends Exception {
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-    private String tipoRegistro;
-    private String identificador;
+public class RecordNotFoundException extends WebApplicationException {
 
     public RecordNotFoundException(String tipoRegistro, String identificador) {
-        this.tipoRegistro = tipoRegistro;
-        this.identificador = identificador;
-    }
-
-    public String getMessage() {
-        return String.format("%s: Registro não encontrado com identificador: %s", tipoRegistro, identificador);
+        super(String.format("%s: Registro não encontrado com identificador: %s", tipoRegistro, identificador), Response.Status.NOT_FOUND);
     }
 }

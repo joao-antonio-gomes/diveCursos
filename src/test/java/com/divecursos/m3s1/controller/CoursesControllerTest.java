@@ -109,9 +109,8 @@ class CoursesControllerTest {
     @DisplayName("Quando recebe requisição com curso com código já cadastrado, joga erro de conflito")
     void create_courseRequestWithExistingCode() {
         CourseReqCreateDTO courseRequestDTO = getCourseRequestDTO();
-        Course course = CourseMapper.INSTANCE.toModel(courseRequestDTO);
 
-        lenient().when(courseService.create(Mockito.any(Course.class))).thenThrow(RecordFoundException.class);
+        when(courseService.create(Mockito.any(Course.class))).thenThrow(RecordFoundException.class);
 
         assertThrows(RecordFoundException.class, () -> coursesController.create(courseRequestDTO));
     }

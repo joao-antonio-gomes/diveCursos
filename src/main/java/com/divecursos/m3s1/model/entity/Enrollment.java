@@ -21,6 +21,12 @@ public class Enrollment {
     public Enrollment() {
     }
 
+    public Enrollment(Long id, Student student, Course course) {
+        this.id = id;
+        this.student = student;
+        this.course = course;
+    }
+
     public Long getId() {
         return id;
     }

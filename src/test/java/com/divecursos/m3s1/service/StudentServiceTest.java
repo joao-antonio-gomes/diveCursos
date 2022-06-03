@@ -27,14 +27,11 @@ class StudentServiceTest {
 
     @Mock
     private StudentRepository studentRepository;
-    @Mock
-    private EnrollmentRepository enrollmentRepository;
 
     @Test
     @DisplayName("Quando procura estudante por nome que não existe, joga erro")
     void findAll_studentNameInexistent() {
-        List<Student> students = new ArrayList<>();
-        when(studentRepository.findAll(Mockito.anyString())).thenReturn(students);
+        when(studentRepository.findAll(Mockito.anyString())).thenReturn(new ArrayList<>());
         assertThrows(RecordNotFoundException.class, () -> studentService.findAll(Mockito.anyString()));
     }
 

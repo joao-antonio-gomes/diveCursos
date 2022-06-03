@@ -1,5 +1,6 @@
 package com.divecursos.m3s1.service;
 
+import com.divecursos.m3s1.exception.IncorrectInputException;
 import com.divecursos.m3s1.exception.RecordFoundException;
 import com.divecursos.m3s1.exception.RecordNotFoundException;
 import com.divecursos.m3s1.model.entity.Course;
@@ -31,6 +32,8 @@ public class EnrollmentService {
     }
 
     public void deleteById(Long id) {
+        if (id == null)
+            throw new IncorrectInputException("Enrollment", "ID is null");
         if (!enrollmentRepository.findById(id).isPresent())
             throw new RecordNotFoundException("Enrollment", String.valueOf(id));
         enrollmentRepository.deleteById(id);

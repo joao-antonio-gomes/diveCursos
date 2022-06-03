@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.ws.rs.core.Response;
@@ -90,28 +91,28 @@ class CoursesControllerTest {
         assertThrows(IncorrectInputException.class, () -> coursesController.getAll(sort, null));
     }
 
-/*    @Test
+    @Test
     @DisplayName("Quando recebe requisição com informações corretas, cria o curso")
     void create_correctCourseRequest() {
         CourseReqCreateDTO courseRequestDTO = getCourseRequestDTO();
         Course course = CourseMapper.INSTANCE.toModel(courseRequestDTO);
 
-        when(courseService.create(course)).thenReturn(course);
+        when(courseService.create(Mockito.any(Course.class))).thenReturn(course);
         Response response = coursesController.create(courseRequestDTO);
 
         assertNotNull(response.getEntity());
-        assertEquals(Response.Status.CREATED, response.getStatus());
-        assertInstanceOf(CourseReqCreateDTO.class, response.getEntity().getClass());
-    }*/
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        assertInstanceOf(CourseRespDTO.class, response.getEntity());
+    }
 
-/*    @Test
+    @Test
     @DisplayName("Quando recebe requisição com curso com código já cadastrado, joga erro de conflito")
     void create_courseRequestWithExistingCode() {
         CourseReqCreateDTO courseRequestDTO = getCourseRequestDTO();
         Course course = CourseMapper.INSTANCE.toModel(courseRequestDTO);
 
-        lenient().when(courseService.create(course)).thenThrow(RecordFoundException.class);
+        lenient().when(courseService.create(Mockito.any(Course.class))).thenThrow(RecordFoundException.class);
 
         assertThrows(RecordFoundException.class, () -> coursesController.create(courseRequestDTO));
-    }*/
+    }
 }

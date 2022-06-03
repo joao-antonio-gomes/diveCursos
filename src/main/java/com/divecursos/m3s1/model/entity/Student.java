@@ -12,6 +12,11 @@ public class Student {
     public Student() {
     }
 
+    public Student(Integer register, String fullName) {
+        this.register = register;
+        this.fullName = fullName;
+    }
+
     public Integer getRegister() {
         return register;
     }
